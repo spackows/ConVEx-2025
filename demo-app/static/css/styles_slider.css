@@ -1,0 +1,70 @@
+#answer_threshold_div
+{
+float: right;
+margin: 20px 0px 0px 0px;
+padding: 0px;
+height: 90px;
+/* border: 1px solid purple; */
+}
+
+#answer_threshold_div p
+{
+margin-bottom: 5px;
+}
+
+#answer_threshold_input
+{
+padding-left: 10px;
+width: 40px;
+}
+
+#answer_threshold_input
+{
+vertical-align: middle;
+}
+
+#answer_threshold_slider
+{
+/* display: inline-block; */
+-webkit-appearance: none;
+appearance: none;
+margin: 10px 0px 0px 15px;
+padding: 0px;
+height: 10px;
+width: 270px;
+background: whitesmoke;
+outline: 1px solid midnightblue;
+-webkit-transition: .2s;
+/* opacity: 0.7; */
+transition: opacity .2s;
+border-radius: 3px;
+vertical-align: middle;
+}
+
+#answer_threshold_slider:hover 
+{
+/* opacity: 1; */
+}
+
+#answer_threshold_slider::-webkit-slider-thumb 
+{
+-webkit-appearance: none;
+appearance: none;
+width: 18px;
+height: 24px;
+background: midnightblue;
+border: none;
+cursor: pointer;
+border-radius: 3px;
+}
+
+#answer_threshold_slider::-moz-range-thumb 
+{
+width: 18px;
+height: 24px;
+background: midnightblue;
+border: none;
+cursor: pointer;
+border-radius: 3px;
+}
+

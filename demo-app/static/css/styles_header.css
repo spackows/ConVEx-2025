@@ -1,0 +1,42 @@
+
+#header
+{
+position: absolute;
+top: 0px;
+right: 0px;
+height: 43px;
+left: 0px;
+background: #192231;
+color: white;
+}
+
+#header h2
+{
+position: absolute;
+bottom: 10px;
+left: 44px;
+margin: 0px;
+padding: 0px;
+font-size: 130%;
+font-weight: normal;
+}
+
+#learn_more_link
+{
+position: absolute;
+bottom: 13px;
+right: 40px;
+margin: 0px;
+padding: 0px;
+}
+
+#learn_more_link a, #learn_more_link a:active, #learn_more_link a:visited
+{
+color: white;
+text-decoration: none;
+}
+
+#learn_more_link a:hover
+{
+text-decoration: underline;
+}

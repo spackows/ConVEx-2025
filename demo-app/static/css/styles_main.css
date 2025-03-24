@@ -1,0 +1,72 @@
+
+#questions_main_div, #content_main_div, #generated_questions_main_div, #comparison_main_div, #button_main_div, #overall_score_main_div, #prompt_details_main_div, #themes_main_div
+{
+margin: 0px 20px 20px 0px;
+padding: 0px;
+display: inline-block;
+vertical-align: top;
+/* border: 1px solid green; */
+}
+
+#button_main_div
+{
+display: block;
+margin-bottom: 40px;
+}
+
+#themes_main_div
+{
+height: 530px;
+}
+
+#user_questions_textarea, #content_textarea, #generated_questions_div, #prompt_parameters_textarea, #prompt_template_textarea
+{
+margin: 10px 0px 0px 0px;
+padding: 10px;
+height: 300px;
+width: 300px;
+border: 1px solid grey;
+overflow-y: auto;
+resize: both;
+}
+
+#content_textarea, #prompt_parameters_textarea, #prompt_template_textarea
+{
+width: 400px;
+}
+
+#overall_score_main_div
+{
+height: 120px;
+width: 230px;
+position: relative;
+}
+
+#overall_chart_div
+{
+margin: 0px;
+padding: 0px;
+height: 100%;
+width: 100%;
+}
+
+#overall_score_label
+{
+margin: 0px;
+padding: 0px;
+position: absolute;
+text-align: center;
+width: 100%;
+top: 45px;
+font-size: 25px;
+font-weight: bold;
+color: green;
+}
+
+#bottom_spacer
+{
+margin: 0px;
+padding: 0px;
+height: 100px;
+}
+

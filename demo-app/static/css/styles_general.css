@@ -1,0 +1,118 @@
+
+*:focus
+{
+outline: none;
+}
+
+input:active
+{
+highlight: none;
+}
+
+
+body
+{
+margin: 0px;
+padding: 100px 40px 40px 40px;
+position: absolute;
+top: 0px;
+right: 0px;
+bottom: 0px;
+left: 0px;
+font-family: Helvetica, Arial, sans-serif;
+background: none;
+font-size: 90%;
+overflow-y: none;
+color: #192231;
+}
+
+a, a:active, a:visited
+{
+color: #192231;
+}
+
+h2
+{
+margin: 0px;
+padding: 0px;
+font-size: 160%;
+}
+
+h3
+{
+margin: 0px;
+padding: 0px;
+}
+
+p
+{
+margin: 15px 0px 0px 0px;
+padding: 0px;
+}
+
+button
+{
+margin: 0px;
+padding: 10px 22px 10px 22px;
+display: inline-block;
+vertical-align: middle;
+cursor: pointer;
+background: midnightblue;
+/* border-radius:3px; */
+color: white;
+text-align: center;
+/* font-size: 90%; */
+/* width: 80px; */
+/* min-width: 80px; */
+border: 2px solid midnightblue;
+}
+
+button:active 
+{
+transform: translateY(2px);
+}
+
+button:disabled
+{
+opacity: 60%;
+transform: none;
+}
+
+
+.spinner
+{
+display: inline-block;
+vertical-align: middle;
+margin: 0px 0px 0px 30px;
+border: 8px solid #192231;
+border-top: 8px solid lightgrey;
+border-radius: 50%;
+width: 25px;
+height: 25px;
+animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+textarea
+{
+background: whitesmoke;
+border: 1px solid lightgrey;
+border-top: 1px solid grey;
+}
+
+
+.txt_input
+{
+margin: 10px 0px 0px 0px;
+padding: 6px;
+width: 280px;
+border: 1px solid lightgrey;
+border-top: 1px solid grey;
+font-family: courier;
+font-size: 110%;
+}
+

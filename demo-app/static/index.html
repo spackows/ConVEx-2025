@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="/css/styles_general.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_general.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_header.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_main.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_compare.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_slider.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_themes.css">
+<link rel="stylesheet" type="text/css" href="/css/styles_details.css">
+<script type="text/javascript" src="/javascript/javascript_general.js"></script>
+<script type="text/javascript" src="/javascript/javascript_compare.js"></script>
+<script type="text/javascript" src="/javascript/javascript_themes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+
+<body onresize="setTableHeadingWidths();">
+
+<div id="header">
+<h2>QDCD: Content testing</h2>
+<div id="learn_more_link"><a href="">Learn more</a> <span style="font-size: 120%;">&#8599;</span></div>
+</div>
+
+<div id="questions_main_div">
+<h2>Real user questions</h2>
+<p>Paste user questions here, one question per line</p>
+<textarea id="user_questions_textarea" onmouseout="checkUserQuestions();" onblur="checkUserQuestions();"></textarea>
+</div>
+
+<div id="content_main_div">
+<h2>Content to test</h2>
+<p>Paste content to answer the users' questions here</p>
+<textarea id="content_textarea" onmouseout="checkContent();" onblur="checkContent();"></textarea><br/>
+</div>
+
+<div id="button_main_div">
+<button onclick="testContent();">Test content</button>
+<div class="spinner" id="test_questions_spinner" style="display: none;"></div>
+</div>
+
+<div id="comparison_main_div" style="display: none;">
+<h2>Results</h2>
+<p>Score is the similarity (0-100) between the user question and the best-matching LLM-generated question (bold)</p>
+<ul id="comparison_table_titles_ul">
+<li>User question</li>
+<li>Closest generated questions</li>
+<li>Score&nbsp;<i id="chevron" class="fa fa-chevron-up" title="Sort lowest to highest" onclick="switchChevron(this);sortTable();"></i></li>
+<li>Match?</li>
+</ul>
+<div id="comparison_table_container">
+<table id="comparison_table"></table>
+</div>
+<script>
+var observer = new MutationObserver( function( mutations ){ setTableHeadingWidths(); } );
+observer.observe( document.getElementById( "comparison_table_container" ), { attributes: true } );
+</script>
+<div id="answer_threshold_div">
+<p>Similarity threshold</p>
+<input class="txt_input" id="answer_threshold_input" value="90" onchange="validateThresholdNumber();setSlider(this);updateResultsTable();updateClusters();" />
+<input type="range" min="1" max="100" value="90" id="answer_threshold_slider" oninput="setThreshold(this)" onmouseover="rememberValue(this);" onmouseout="isValueChanged(this);" />
+</div>
+</div>
+
+<div id="overall_score_main_div" style="display: none;">
+<canvas id="overall_chart_div"></canvas>
+<div id="overall_score_label"></div>
+</div>
+
+<div id="themes_main_div" style="display: none;">
+<h2>Question themes</h2>
+<div id="themes_radio_div">
+<input type="radio" class="theme_radio" name="theme_type_radio" id="theme_type_radio_all" onchange="showClusters();" checked /> All questions
+<input type="radio" class="theme_radio" name="theme_type_radio" id="theme_type_radio_matched" onchange="showClusters();" /> Matched
+<input type="radio" class="theme_radio" name="theme_type_radio" id="theme_type_radio_unmatched" onchange="showClusters();" /> Unmatched
+</div>
+<div class="themes_container_div" id="themes_container_div_all"><div class="spinner" id="themes_spinner_all" style="display: none;"></div></div>
+<div class="themes_container_div" id="themes_container_div_matched" style="display: none;"><div class="spinner" id="themes_spinner_matched" style="display: none;"></div></div>
+<div class="themes_container_div" id="themes_container_div_unmatched" style="display: none;"><div class="spinner" id="themes_spinner_unmatched" style="display: none;"></div></div>
+</div>
+
+<div id="view_details_button_div">
+<span id="view_details_label_span" onclick="showHideDetails(this);">View details</span>
+</div>
+
+<div id="generated_questions_main_div" style="display: none;">
+<h2>Generated questions</h2>
+<p>Questions generated from the content by an LLM</p>
+<div id="generated_questions_div"></div>
+</div>
+
+<div id="prompt_details_main_div" style="display: none;">
+<h2>Model and prompt details</h2>
+<p>Model ID (See: <a href="https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models.html?context=wx&audience=wdp" target="_other">Models</a> &#8599;)</p>
+<input class="txt_input" id="model_id_input" value="meta-llama/llama-3-3-70b-instruct"/>
+<p>Prompt parameters (See: <a href="https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-model-parameters.html?context=wx&audience=wdp" target="_other">Prompt parameters</a> &#8599;)</p>
+<textarea id="prompt_parameters_textarea">
+{
+    "decoding_method" : "sample",
+    "temperature"     : 0.2,
+    "top_p"           : 1,
+    "top_k"           : 10,
+    "min_new_tokens"  : 0,
+    "max_new_tokens"  : 200,
+    "stop_sequences"  : [ "\n\n" ]
+}
+</textarea>
+<p>Prompt template</p>
+<textarea id="prompt_template_textarea">
+Article
+----
+## Growing tomatoes in pots 
+Most tomato plants do well in containers. 
+Determinate varieties, don't grow as large as indeterminate varieties. 
+For anything other than compact determinate varieties, use a 5 gallon container at a minimum. 
+----
+
+Five (5) questions answered by the article:
+1. Can you grow tomatoes in containers?
+2. Which is larger, determinate varieties or indeterminate varieties?
+3. Do tomatoes do well in pots?
+4. Do determinate varieties grow as large as indeterminate ones?
+5. What size of container is right for tomatoes?
+
+
+Article
+----
+## Growing tomatoes in pots 
+Most tomato plants do well in containers. 
+Determinate varieties, don't grow as large as indeterminate varieties. 
+For anything other than compact determinate varieties, use a 5 gallon container at a minimum. 
+----
+
+Five (5) questions answered by the article:
+1. How large a pot do tomatoes require?
+2. What is the minimum size of pot required to grow tomatoes?
+3. Is a 8 gallon container large enough for tomatoes?
+4. Can tomatoes grow in pots?
+5. How well do tomatoes grow in containers?
+
+
+Article
+----
+%s
+----
+
+Five (5) questions answered by the article:
+</textarea>
+</div>
+
+
+<div id="bottom_spacer"></div>
+
+</body>
+</html>

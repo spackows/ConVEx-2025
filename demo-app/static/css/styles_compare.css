@@ -1,0 +1,95 @@
+
+#comparison_table_titles_ul
+{
+margin: 20px 0px 0px 0px;
+padding: 0px;
+list-style: none;
+font-size: 0px;
+/* border: 1px solid pink; */
+}
+
+#comparison_table_titles_ul li
+{
+margin: 0px;
+padding: 0px 0px 0px 10px;
+/* width: 200px; */
+display: inline-block;
+/* font-weight: bold; */
+font-size: initial;
+}
+
+.green_check, .red_x
+{
+font-size: 150%;
+font-weight: bold;
+color: green;
+}
+
+.red_x
+{
+color: red;
+}
+
+#chevron
+{
+margin: 0px 0px 0px 10px;
+padding: 0px;
+/* float: right; */
+cursor: pointer;
+cursor: midnightblue;
+}
+
+#comparison_table_container
+{
+margin: 10px 0px 0px 0px;
+padding: 0px;
+/*
+width: 81%;
+height: 300px;
+*/
+height: 300px;
+width: 900px;
+background: none;
+border: 1px solid lightgrey;
+overflow-y: auto;
+resize: both;
+}
+
+#comparison_table
+{
+margin: 0px;
+padding: 0px;
+width: 100%;
+border-collapse: collapse;
+}
+
+#comparison_table tr:nth-child(odd)
+{
+background-color: whitesmoke;
+}
+
+#comparison_table tr
+{
+margin: 0px;
+padding: 0px;
+}
+
+#comparison_table td
+{
+margin: 0px;
+padding: 10px;
+border-right: 1px solid lightgrey;
+vertical-align: top;
+}
+
+#comparison_table ul
+{
+margin: 0px;
+padding: 0px;
+}
+
+#comparison_table li
+{
+margin: 0px 0px 5px 10px;
+padding: 0px;
+}
