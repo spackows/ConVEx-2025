@@ -1,5 +1,5 @@
 
-#questions_main_div, #content_main_div, #generated_questions_main_div, #comparison_main_div, #button_main_div, #overall_score_main_div, #prompt_details_main_div, #themes_main_div
+#questions_main_div, #content_main_div, #generated_questions_main_div, #comparison_main_div, #button_main_div, #overall_score_main_div, #prompt_details_main_div, #themes_main_div, #status_main_div
 {
 margin: 0px 20px 20px 0px;
 padding: 0px;
@@ -12,6 +12,19 @@ vertical-align: top;
 {
 display: block;
 margin-bottom: 40px;
+}
+
+#status_txt_div
+{
+margin: 0px;
+padding: 10px;
+height: 200px;
+width: 300px;
+overflow-y: auto;
+font-style: italic;
+line-height: 1.5;
+color: grey;
+border: 1px solid lightgrey;
 }
 
 #themes_main_div

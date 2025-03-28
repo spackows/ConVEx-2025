@@ -85,6 +85,8 @@ function testContent()
     document.getElementById( "prompt_details_main_div"      ).style.display = "none";
     document.getElementById( "test_questions_spinner"       ).style.display = "inline-block";
     
+    document.getElementById( "view_details_label_span" ).innerHTML = "View details";
+    
     document.getElementById( "comparison_table"    ).innerHTML = "";
     document.getElementById( "overall_chart_div"   ).innerHTML = "";
     document.getElementById( "overall_score_label" ).innerHTML = "";
@@ -98,20 +100,28 @@ function testContent()
     document.getElementById( "theme_type_radio_matched"   ).checked = false;
     document.getElementById( "theme_type_radio_unmatched" ).checked = false;
     
-    _generateQuestions( content, function( gen_error_str, generated_questions_arr )
+    document.getElementById( "status_txt_div" ).innerHTML = "Status...";
+    document.getElementById( "status_main_div" ).style.display = "block";
+    
+    generateQuestions( content, function( gen_error_str, job_id, generated_questions_arr )
     {
         if( gen_error_str )
         {
-            document.getElementById( "test_questions_spinner"   ).style.display = "none";
+            _deleteJobFile( job_id );
             alert( gen_error_str );
+            document.getElementById( "test_questions_spinner"   ).style.display = "none";
+            document.getElementById( "status_main_div" ).style.display = "none";
             return;
         }
         
         document.getElementById( "generated_questions_div" ).innerHTML = "<p>" + generated_questions_arr.join( "</p>\n<p>" ) + "</p>";
         
-        _compareQuestions( user_questions_arr, generated_questions_arr, function( comp_error_str, comp_results_arr )
+        compareQuestions( job_id, user_questions_arr, generated_questions_arr, function( comp_error_str, comp_results_arr )
         {
+            _deleteJobFile( job_id );
+            
             document.getElementById( "test_questions_spinner" ).style.display = "none";
+            document.getElementById( "status_main_div" ).style.display = "none";
             
             if( comp_error_str )
             {
@@ -151,6 +161,26 @@ function testContent()
 }
 
 
+function generateQuestions( content, callback )
+{
+    _generateQuestions( content, function( gen_error_str, job_id )
+    {
+        if( gen_error_str )
+        {
+            callback( gen_error_str, "", [] );
+            return;
+        }
+        
+        pollForGeneratedQuestions( job_id, 1, function( poll_error_str, generated_questions_arr )
+        {
+            callback( poll_error_str, job_id, generated_questions_arr );
+            
+        } );
+        
+    } );
+}
+
+
 function _generateQuestions( content, callback )
 {
     var model_id = document.getElementById( "model_id_input" ).value;
@@ -184,31 +214,30 @@ function _generateQuestions( content, callback )
                              
                              if( !( "responseJSON" in result ) || !result["responseJSON"] )
                              {
-                                 var msg = "Testing content failed.\n\n";
+                                 var msg = "Generating questions failed.\n\n";
                                  msg += ( status_code == "" ) ? "" : "\n\nStatus code: " + status_code;
                                  msg += ( status_text == "" ) ? "" : "\n\nStatus text: " + status_text;
-                                 callback( msg, [] );
+                                 callback( msg, "" );
                                  return;
                              }
                              
                              if( ( "error_str" in result["responseJSON"] ) && result["responseJSON"]["error_str"] )
                              {
-                                 var msg = "Testing content failed.\n\n" +
+                                 var msg = "Generating questions failed.\n\n" +
                                            "error_str: " + result["responseJSON"]["error_str"];
-                                 callback( msg, [] );
+                                 callback( msg, "" );
                                  return;
                              };
                              
-                             var generated_questions_arr = ( ( "questions_arr" in result["responseJSON"] ) && result["responseJSON"]["questions_arr"] ) ? result["responseJSON"]["questions_arr"] : [];
-                             if( !generated_questions_arr || !Array.isArray( generated_questions_arr ) || ( generated_questions_arr.length < 1 ) )
+                             var job_id = ( ( "job_id" in result["responseJSON"] ) && result["responseJSON"]["job_id"] ) ? result["responseJSON"]["job_id"] : "";
+                             if( !job_id )
                              {
-                                 var msg = "Testing content failed.\n\n" +
-                                           "No questions were generated by the large language model.";
-                                 callback( msg, [] );
+                                 var msg = "Running the job to generate questions failed.";
+                                 callback( msg, "" );
                                  return;
                              }
                              
-                             callback( "", generated_questions_arr );
+                             callback( "", job_id );
                              
                          }
                          

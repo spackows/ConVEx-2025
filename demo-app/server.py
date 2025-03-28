@@ -4,8 +4,8 @@ import os
 
 import my_log as g_log
 import my_parms as g_parms
-import my_question_gen as g_gen
-import my_question_comp as g_comp
+import my_job as g_job
+import my_time as g_time
 import my_cluster as g_cluster
 
 
@@ -14,6 +14,9 @@ app = Flask( __name__, static_url_path="" )
 port = int( os.getenv( 'PORT', 8080 ) )
 
 
+
+    
+    
 @app.route( "/generate-questions", methods = ["POST"] )
 def generateQuestions():
     g_log.writeLog( "[server] /generate-questions" )
@@ -31,18 +34,20 @@ def generateQuestions():
     prompt_tmplt = g_parms.getprompttemplate( parms )
     b_debug      = g_parms.getdebug( parms )
     
-    questions_arr, error_str = g_gen.genQuestions( content, model_id, prompt_parms, prompt_tmplt, b_debug )
-    if error_str:
-        return { "error_str" : error_str }, 200
+    job_id, error_str = g_job.runQuestionGenJob( content, model_id, prompt_parms, prompt_tmplt, b_debug )
     
-    return { "questions_arr" : questions_arr }
+    return { "job_id" : job_id, "error_str" : error_str }, 200
 
 
 @app.route( "/compare-questions", methods = ["POST"] )
 def compareQuestions():
     g_log.writeLog( "[server] /compare-questions" )
     
-    parms, error_str = g_parms.getParms( request, [ "apikey", "user_questions_arr", "generated_questions_arr" ] )
+    parms, error_str = g_parms.getParms( request, [ "apikey", "job_id", "user_questions_arr", "generated_questions_arr" ] )
+    if error_str:
+        return { "error_str" : error_str }, 200
+    
+    job_id, error_str = g_parms.getjobid( parms )
     if error_str:
         return { "error_str" : error_str }, 200
     
@@ -54,11 +59,43 @@ def compareQuestions():
     if error_str:
         return { "error_str" : error_str }, 200
     
-    results_arr, error_str = g_comp.compareQuestions( user_questions_arr, generated_questions_arr )
+    error_str = g_job.runQuestionCompJob( job_id, user_questions_arr, generated_questions_arr )
+    
+    return { "error_str" : error_str }
+
+
+@app.route( "/status", methods = ["POST"] )
+def status():
+    g_log.writeLog( "[server] /status" )
+    
+    parms, error_str = g_parms.getParms( request, [ "apikey", "job_id" ] )
     if error_str:
         return { "error_str" : error_str }, 200
     
-    return { "results_arr" : results_arr }
+    job_id, error_str = g_parms.getjobid( parms )
+    if error_str:
+        return { "error_str" : error_str }, 200
+    
+    results_json = g_job.getStatus( job_id )
+    
+    return results_json, 200
+
+
+@app.route( "/cleanup", methods = ["POST"] )
+def cleanup():
+    g_log.writeLog( "[server] /cleanup" )
+    
+    parms, error_str = g_parms.getParms( request, [ "apikey", "job_id" ] )
+    if error_str:
+        return { "error_str" : error_str }, 200
+    
+    job_id, error_str = g_parms.getjobid( parms )
+    if error_str:
+        return { "error_str" : error_str }, 200
+    
+    g_job.deleteJobFile( job_id )
+    
+    return { "success" : "success" }, 200
 
 
 # expected user_questions_arr like:

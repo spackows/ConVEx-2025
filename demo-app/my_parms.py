@@ -159,3 +159,18 @@ def getmaxpercent( parm_vals ):
         g_log.writeLog( "[server] getmaxpercent: " + error_str )
         return None
 
+
+def getjobid( parm_vals ):
+    job_id = ""
+    error_str = ""
+    try:
+        if "job_id" not in parm_vals:
+            error_str = "Missing parameter: 'job_id' was not specified"
+            return job_id, error_str
+        job_id = parm_vals["job_id"]
+        return job_id, error_str
+    except Exception as e:
+        error_str = str( e )
+        g_log.writeLog( "[server] getjobid: " + error_str )
+        return job_id, error_str
+

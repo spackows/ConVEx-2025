@@ -1,9 +1,31 @@
 
-function _compareQuestions( user_questions_arr, generated_questions_arr, callback )
+function compareQuestions( job_id, user_questions_arr, generated_questions_arr, callback )
+{
+    _compareQuestions( job_id, user_questions_arr, generated_questions_arr, function( gen_error_str )
+    {
+        if( gen_error_str )
+        {
+            callback( gen_error_str, [] );
+            return;
+        }
+        
+        pollForQuestionComparison( job_id, 1, function( poll_error_str, results_arr )
+        {
+            callback( poll_error_str, results_arr );
+            
+        } );
+        
+    } );
+}
+
+
+function _compareQuestions( job_id, user_questions_arr, generated_questions_arr, callback )
 {
     $.ajax( { url         : "./compare-questions",
               type        : "POST",
-              data        : JSON.stringify( { "user_questions_arr" : user_questions_arr, "generated_questions_arr" : generated_questions_arr } ),
+              data        : JSON.stringify( { "job_id" : job_id, 
+                                              "user_questions_arr" : user_questions_arr, 
+                                              "generated_questions_arr" : generated_questions_arr } ),
               dataType    : "json",
               contentType : "application/json",
               complete : function( result )
@@ -13,31 +35,22 @@ function _compareQuestions( user_questions_arr, generated_questions_arr, callbac
                              
                              if( !( "responseJSON" in result ) || !result["responseJSON"] )
                              {
-                                 var msg = "Evaluating results failed.\n\n";
+                                 var msg = "Comparing questions failed.\n\n";
                                  msg += ( status_code == "" ) ? "" : "\n\nStatus code: " + status_code;
                                  msg += ( status_text == "" ) ? "" : "\n\nStatus text: " + status_text;
-                                 callback( msg, [] );
+                                 callback( msg );
                                  return;
                              }
                              
                              if( ( "error_str" in result["responseJSON"] ) && result["responseJSON"]["error_str"] )
                              {
-                                 var msg = "Testing content failed.\n\n" +
+                                 var msg = "Comparing questions failed.\n\n" +
                                            "error_str: " + result["responseJSON"]["error_str"];
-                                 callback( msg, [] );
+                                 callback( msg );
                                  return;
                              };
                              
-                             var results_arr = ( ( "results_arr" in result["responseJSON"] ) && result["responseJSON"]["results_arr"] ) ? result["responseJSON"]["results_arr"] : [];
-                             if( !results_arr || !Array.isArray( results_arr ) || ( results_arr.length < 1 ) )
-                             {
-                                 var msg = "Evaluating results failed.\n\n" +
-                                           "No results were returned.";
-                                 callback( msg, [] );
-                                 return;
-                             }
-                             
-                             callback( "", results_arr );
+                             callback( "" );
                              
                          }
                          

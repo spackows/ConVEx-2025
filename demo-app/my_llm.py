@@ -41,36 +41,29 @@ g_model_gen_questions = ModelInference(
 )
 
 # https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-prompt-tips.html?context=wx&audience=wdp
-g_template_gen_questions = """Article
-----
-## Growing tomatoes in pots 
-Most tomato plants do well in containers. 
-Determinate varieties, don't grow as large as indeterminate varieties. 
-For anything other than compact determinate varieties, use a 5 gallon container at a minimum. 
-----
-
-Five (5) questions answered by the article:
-1. Can you grow tomatoes in containers?
-2. Which is larger, determinate varieties or indeterminate varieties?
-3. Do tomatoes do well in pots?
-4. Do determinate varieties grow as large as indeterminate ones?
-5. What size of container is right for tomatoes?
-
+g_template_gen_questions = """Generate 10 unique questions that are answered by the given article.  
+Generate questions for as many facts as possible.  
+Only generate questions for which the facts of the answer are in the article.
 
 Article
 ----
 ## Growing tomatoes in pots 
 Most tomato plants do well in containers. 
-Determinate varieties, don't grow as large as indeterminate varieties. 
+Determinate varieties don't grow as large as indeterminate varieties. 
 For anything other than compact determinate varieties, use a 5 gallon container at a minimum. 
 ----
 
-Five (5) questions answered by the article:
-1. How large a pot do tomatoes require?
-2. What is the minimum size of pot required to grow tomatoes?
-3. Is a 8 gallon container large enough for tomatoes?
-4. Can tomatoes grow in pots?
-5. How well do tomatoes grow in containers?
+Ten (10) unique questions answered by the article:
+1. Can you grow tomatoes in containers?
+2. Do tomato plants do well in containers?
+3. Do tomatoes do well in pots?
+4. What can you grow tomato plants in?
+5. Which is larger, determinate varieties or indeterminate varieties?
+6. Do determinate varieties grow as large as indeterminate varieties?
+7. Do determinate varieties grow as large as indeterminate ones?
+8. What size of container is right for tomatoes?
+9. Is a 5 gallon container large enough for tomatoes?
+10. What is the minimum size of container that tomatoes other than compact determinate varieties require?
 
 
 Article
@@ -78,7 +71,7 @@ Article
 %s
 ----
 
-Five (5) questions answered by the article:
+Ten (10) unique questions answered by the article:
 """
 
 
@@ -127,8 +120,13 @@ def genQuestions( chunk_txt, model=None, prompt_template=None, b_debug=False ):
             questions_arr = re.findall( r"(\d\..*)", output )
         else:
             questions_arr = re.split( r"[\n\r]+", output )
-        questions_arr = [ re.sub( r"^.*?\d+\.\s*", "", q ) for q in questions_arr ]
-        return output, questions_arr
+        #questions_arr = [ re.sub( r"^.*?\d+\.\s*", "", q ) for q in questions_arr ]
+        questions_arr_final = []
+        for q in questions_arr:
+            question_txt = re.sub( r"^.*?\d+\.\s*", "", q )
+            if re.match( r"\S", question_txt ):
+                questions_arr_final.append( question_txt )
+        return output, questions_arr_final
     else:
         return "", []
 
