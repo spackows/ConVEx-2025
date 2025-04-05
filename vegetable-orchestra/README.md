@@ -15,6 +15,10 @@ Quick links:
 ## Demo video
 This video demonstrates the process of testing to see if the Wikipedia page can answer those questions:
 
+https://youtu.be/LwEB_obZxy0
+
+<img src="./images/vegetable-orchestra-demo-video-frame.png" width="700px" />
+
 <p>&nbsp;</p>
 
 
@@ -23,7 +27,7 @@ There is a very nice Wikipedia article about the vegetable orchestra:
 
 https://en.wikipedia.org/wiki/The_Vegetable_Orchestra
 
-<img src="./vegetable-orchestra-Wikipedia.png" width="700px" />
+<img src="./images/vegetable-orchestra-Wikipedia.png" width="700px" />
 
 <p>&nbsp;</p>
 
@@ -39,7 +43,7 @@ One good source of questions real people ask about the vegetable orchestra is co
 
 https://www.vegetableorchestra.org/qa.php
 
-<img src="./vegetable-orchestra-FAQ.png" width="700px" />
+<img src="./images/vegetable-orchestra-FAQ.png" width="700px" />
 
 ### Source 2: Questions collected by Google
 
@@ -47,7 +51,7 @@ Another source of questions asked by real people is Google search.
 
 When many people submit similar questions in Google search queries, Google shows those common questions:
 
-<img src="./vegetable-orchestra-google-questions.png" width="500px" />
+<img src="./images/vegetable-orchestra-google-questions.png" width="500px" />
 
 <p>&nbsp;</p>
 
@@ -65,7 +69,7 @@ If you want to see what a difference some content edits can make, try adding inf
 
 For example, here's a version of the article with information about making vegetable instruments added: [updated article]("./vegetable-orchestra_Wikipedia-article-new.txt")
 
-<img src="./vegetable-orchestra-article-diff.png" width="700px" />
+<img src="./images/vegetable-orchestra-article-diff.png" width="700px" />
 
 <p>&nbsp;</p>
 
