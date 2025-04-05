@@ -60,14 +60,14 @@ When many people submit similar questions in Google search queries, Google shows
 We can test whether the Wikipedia article answers those real questions:
 
 1. Go to this demo tool: (url will be made available during the workshop)
-2. Paste these questions into the tool: [Questions from real people]("./vegetable-orchestra-questions.txt")
-3. Paste the Wikipedia article text into the tool: [Wikipedia article text]("./vegetable-orchestra_Wikipedia-article-org.txt")
+2. Paste these questions into the tool: [Questions from real people](./vegetable-orchestra-questions.txt)
+3. Paste the Wikipedia article text into the tool: [Wikipedia article text](./vegetable-orchestra_Wikipedia-article-org.txt)
 4. Click **Test content** to test the content
 
 ### Optional: Improve results
 If you want to see what a difference some content edits can make, try adding information to the article to answer mismatched questions and then clicking **Test content** again.
 
-For example, here's a version of the article with information about making vegetable instruments added: [updated article]("./vegetable-orchestra_Wikipedia-article-new.txt")
+For example, here's a version of the article with information about making vegetable instruments added: [updated article](./vegetable-orchestra_Wikipedia-article-new.txt)
 
 <img src="./images/vegetable-orchestra-article-diff.png" width="700px" />
 
