@@ -41,5 +41,9 @@ This presentation demonstrates a method for testing whether question-answering R
 
 <p>&nbsp;</p>
 
+*Image source: [Scroll](https://commons.wikimedia.org/wiki/File:Paper_Scroll_2.svg) and [feather pen](https://commons.wikimedia.org/wiki/File:Quill_pen_transparency.png)*
+
+<p>&nbsp;</p>
+
 
 
