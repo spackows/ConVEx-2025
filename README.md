@@ -29,6 +29,7 @@ This presentation demonstrates a method for testing whether question-answering R
 - [Information typing is the professional writer’s secret ingredient for RAG success](https://medium.com/@sarah-packowski/information-typing-is-the-professional-writers-secret-ingredient-for-rag-success-fee84c544515)
 - [How publishers need to adapt in the era of RAG](https://medium.com/@sarah-packowski/how-publishers-need-to-adapt-in-the-era-of-rag-64ebe2c95540)
 - [The role of technical writers in the age of RAG and agentic LLM solutions](https://medium.com/@sarah-packowski/the-role-of-technical-writers-in-the-age-of-rag-and-agentic-llm-solutions-e1196a4847da)
+- [The unintended impact of Wikipedia on RAG best practices](https://sarah-packowski.medium.com/the-unintended-impact-of-wikipedia-on-rag-best-practices-00821aa2d9aa)
 
 **Other presentations, workshops, and papers**
 - [Optimizing and Evaluating RAG](https://github.com/spackows/ICAAI-2024_RAG-CD)
