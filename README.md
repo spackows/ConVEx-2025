@@ -1,6 +1,8 @@
 # ConVEx-2025
 Supporting material for a presentation at [ConVEx 2025](https://convex.infomanagementcenter.com/)
 
+Presenter: Sarah Packowski - AIContentOps@sarah-p.ca
+
 ## Introduction
 Everyone is excited about retrieval-augmented generation (RAG) and AI agents, right now!
 
