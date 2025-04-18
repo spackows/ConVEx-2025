@@ -17,7 +17,7 @@ This presentation demonstrates a method for testing whether question-answering R
 - [Slides](https://github.com/spackows/ConVEx-2025/tree/main/slides)
 - [Sample web app](https://github.com/spackows/ConVEx-2025/tree/main/demo-app)
 - [Hands-on exercise](https://github.com/spackows/ConVEx-2025/tree/main/vegetable-orchestra)
-- [Demo video](https://youtu.be/LwEB_obZxy0)
+- [Topic testing web app demo video](https://youtu.be/LwEB_obZxy0)
 
 <p>&nbsp;</p>
 
