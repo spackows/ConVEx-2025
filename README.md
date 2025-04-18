@@ -13,6 +13,7 @@ That's why knowledge base content quality can make or break RAG and agentic solu
 ### Testing content
 This presentation demonstrates a method for testing whether question-answering RAG solutions will be able to successfully answer expected questions using given content as a knowledge base.  This technique can be automated and can scale to any size of knowledge base.
 
+- [Presentation recording (YouTube)](https://youtu.be/lcOAuCef4j0)
 - [Slides](https://github.com/spackows/ConVEx-2025/tree/main/slides)
 - [Sample web app](https://github.com/spackows/ConVEx-2025/tree/main/demo-app)
 - [Hands-on exercise](https://github.com/spackows/ConVEx-2025/tree/main/vegetable-orchestra)
