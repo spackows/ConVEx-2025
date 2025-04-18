@@ -19,8 +19,6 @@ This presentation demonstrates a method for testing whether question-answering R
 - [Hands-on exercise](https://github.com/spackows/ConVEx-2025/tree/main/vegetable-orchestra)
 - [Demo video](https://youtu.be/LwEB_obZxy0)
 
-*_After the conference, a recording of the presentation will be available here too._
-
 <p>&nbsp;</p>
 
 ## Related resources
